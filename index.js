@@ -19,9 +19,9 @@ let checkChannelConfig = new Promise((resolve, reject) => {
 checkChannelConfig.then((channelConfig) => {
     if(!channelConfig) {
         channelConfig = {
-            "LINE_CHANNEL_ID": process.env.LINE_CHANNEL_ID | null,
-            "LINE_CHANNEL_SECRET": process.env.LINE_CHANNEL_SECRET | null,
-            "LINE_CHANNEL_ACCESS_TOKEN": process.env.LINE_CHANNEL_ACCESS_TOKEN | null
+            "LINE_CHANNEL_ID": process.env.LINE_CHANNEL_ID || null,
+            "LINE_CHANNEL_SECRET": process.env.LINE_CHANNEL_SECRET || null,
+            "LINE_CHANNEL_ACCESS_TOKEN": process.env.LINE_CHANNEL_ACCESS_TOKEN || null
         }
     }
 

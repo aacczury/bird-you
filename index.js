@@ -27,8 +27,10 @@ checkChannelConfig.then((channelConfig) => {
 
     if(!channelConfig.LINE_CHANNEL_ID ||
         !channelConfig.LINE_CHANNEL_SECRET ||
-        !channelConfig.LINE_CHANNEL_ACCESS_TOKEN)
-        throw "Can't get line bot configs!"
+        !channelConfig.LINE_CHANNEL_ACCESS_TOKEN) {
+            console.log(channelConfig);
+            throw "Can't get line bot configs!"
+        }
 
     let bot = linebot({
         "channelId": channelConfig.LINE_CHANNEL_ID,

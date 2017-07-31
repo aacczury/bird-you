@@ -45,7 +45,7 @@ checkChannelConfig.then((channelConfig) => {
         //console.log(event);
         if(event.message.type === "text") {
             ({err, replyMessage} = messageParser.parse(event.message.text));
-            if(err) console.log(err.message);
+            if(err.code) console.log(err.message);
             else {
                 event.reply(replyMessage).then(function (data) {
                     console.log("set sucess");

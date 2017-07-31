@@ -2,8 +2,9 @@ let fs = require('fs');
 let linebot = require('linebot');
 let express = require('express');
 
+let messageParser = require('./messageParser.js');
+
 let CONFIG_PATH = "./configs.js";
-let messageParser = './messageParser.js';
 
 let checkChannelConfig = new Promise((resolve, reject) => {
     fs.stat(CONFIG_PATH, (err, stats) => {
@@ -38,7 +39,7 @@ checkChannelConfig.then((channelConfig) => {
         "channelSecret": channelConfig.LINE_CHANNEL_SECRET,
         "channelAccessToken": channelConfig.LINE_CHANNEL_ACCESS_TOKEN
     });
-    
+
     bot.on('message', function(event) {
         //console.log(event);
         if(event.message.type === "text") {

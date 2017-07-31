@@ -2,7 +2,8 @@ let fs = require('fs');
 let linebot = require('linebot');
 let express = require('express');
 
-let CONFIG_PATH = "./configs.js"
+let CONFIG_PATH = "./configs.js";
+let messageParser = './messageParser.js';
 
 let checkChannelConfig = new Promise((resolve, reject) => {
     fs.stat(CONFIG_PATH, (err, stats) => {
@@ -39,14 +40,25 @@ checkChannelConfig.then((channelConfig) => {
     });
     
     bot.on('message', function(event) {
-        console.log(event);
+        //console.log(event);
+        if(event.message.type === "text") {
+            let {err, replyMsg} = messageParser.parse(event.message.text);
+            if(err) console.log(err.message);
+            else {
+                event.reply(replyMsg).then(function (data) {
+                    console.log("set sucess");
+                    console.log(data);
+                }).catch(function (error) {
+                    console.error(error);
+                });
+            }
+        }
     });
 
     const app = express();
     const linebotParser = bot.parser();
     app.post('/', linebotParser);
 
-    //因為 express 預設走 port 3000，而 heroku 上預設卻不是，要透過下列程式轉換
     let server = app.listen(process.env.PORT || 8080, function() {
         let port = server.address().port;
         console.log("App now running on port", port);

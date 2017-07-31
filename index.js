@@ -40,13 +40,14 @@ checkChannelConfig.then((channelConfig) => {
         "channelAccessToken": channelConfig.LINE_CHANNEL_ACCESS_TOKEN
     });
 
+    let err, replyMessage;
     bot.on('message', function(event) {
         //console.log(event);
         if(event.message.type === "text") {
-            let {err, replyMsg} = messageParser.parse(event.message.text);
+            ({err, replyMessage} = messageParser.parse(event.message.text));
             if(err) console.log(err.message);
             else {
-                event.reply(replyMsg).then(function (data) {
+                event.reply(replyMessage).then(function (data) {
                     console.log("set sucess");
                     console.log(data);
                 }).catch(function (error) {

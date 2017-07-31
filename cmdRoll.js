@@ -21,6 +21,15 @@ module.exports = {
     run: (args) => {
         let result = 0;
         if(args.sign != ROLL_SIGN) return {"err": {"code": 1, "message": "sign is not match"}, "result": result};
+        if(!args.a && args.a != 0) return {"err": {"code": 2, "message": "arg does not exist"}, "result": result};
+        if(!args.b && args.b != 0) return {"err": {"code": 2, "message": "arg does not exist"}, "result": result};
+
+        let a = Number(args.a);
+        let b = Number(args.b);
+        if(isNaN(a)) return {"err": {"code": 3, "message": "arg is not num"}, "result": result};
+        if(isNaN(b)) return {"err": {"code": 3, "message": "arg is not num"}, "result": result};
+
+        if(a > b)  a ^= b, b ^= a, a ^= b;
 
         result = ~~(Math.random() * (b - a) + a);
 

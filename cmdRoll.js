@@ -31,7 +31,7 @@ module.exports = {
 
         if(a > b)  a ^= b, b ^= a, a ^= b;
 
-        result = ~~(Math.random() * (b - a) + a);
+        result = parseInt(Math.random() * (b - a) + a);
 
         return  {"err": {"code": 0, "message": "sucess"}, "result": result};
     }

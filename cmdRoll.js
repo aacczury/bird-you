@@ -5,7 +5,7 @@ module.exports = {
         let args = {"sign": ROLL_SIGN};
         let argsSplit = argsStr.split(" ");
 
-        if(argsSplit.length < 2) return {"err": {"code": 1, "message": "arg too less"}, "args": arg};
+        if(argsSplit.length < 2) return {"err": {"code": 1, "message": "arg too less"}, "args": args};
 
         let a = Number(argsSplit[0]);
         let b = Number(argsSplit[1]);

@@ -1,26 +1,35 @@
 let PREFIX = '/';
-let cmd = {};
-cmd.ROLL = require('./cmdRoll.js');
+let cmd = {
+    "ROLL": require('./cmdRoll.js'),
+    "NEENERGY": require('./cmdNeEnergy.js')
+};
+let cmdMapping = {
+    "負能量": "NEENERGY"
+}
 
 module.exports = {
     parse: (message) => {
         let replyMessage = ""
-        if(message.indexOf(PREFIX) != 0) return {"err": {"code": 1, "message": "prefix error"}, "replyMessage": replyMessage};
+        if(message.indexOf(PREFIX) != 0) return {"err": {"code": 1, "message": "prefix error"}, "replyMessage": null};
         
         let commandLine = message.substring(message.indexOf(PREFIX) + 1, message.length);
-        if(!commandLine && commandLine != 0) return {"err": {"code": 2, "message": "command is empty"}, "replyMessage": replyMessage};
+        if(!commandLine && commandLine != 0) return {"err": {"code": 2, "message": "command is empty"}, "replyMessage": null};
         
-        let command = commandLine.substring(0, commandLine.indexOf(" ")).toUpperCase();
-        if(!(command in cmd)) return {"err": {"code": 3, "message": "no this command"}, "replyMessage": replyMessage};
+        let commandLength = commandLine.indexOf(" ");
+        if(commandLength == -1) commandLength = commandLine.length;
 
-        let argsLine = commandLine.substring(commandLine.indexOf(" ") + 1, commandLine.length);
+        let command = commandLine.substring(0, commandLength).toUpperCase();
+        if(command in cmdMapping) command = cmdMapping[command];
+        if(!(command in cmd)) return {"err": {"code": 3, "message": "no this command"}, "replyMessage": null};
+
+        let argsLine = commandLine.substring(commandLength + 1, commandLine.length);
 
         let err, args, result;
         ({err, args} = cmd[command].parse(argsLine));
-        if(err.code) return {"err": err, "replyMessage": replyMessage};
+        if(err.code) return {"err": err, "replyMessage": null};
         ({err, result} = cmd[command].run(args));
-        if(err.code) return {"err": err, "replyMessage": replyMessage};
+        if(err.code) return {"err": err, "replyMessage": null};
 
-        return {"err": err, "replyMessage": String(result)}
+        return {"err": err, "replyMessage": result}
     }
 }

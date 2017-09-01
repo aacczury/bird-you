@@ -1,7 +1,7 @@
 let PREFIX = '/';
 let cmd = {
-    "ROLL": require('./cmdRoll.js'),
-    "NEENERGY": require('./cmdNeEnergy.js')
+    "ROLL": require('./cmd/roll.js'),
+    "NEENERGY": require('./cmd/neEnergy.js')
 };
 let cmdMapping = {
     "負能量": "NEENERGY"

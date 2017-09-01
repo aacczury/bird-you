@@ -1,7 +1,9 @@
-let fs = require("fs")
-let NEENRGY_SIGN = "NEENERGY"
-console.log("Loading NeEnergy.json...")
-let neEnergyData = JSON.parse(fs.readFileSync("NeEnergy.json"))
+let fs = require("fs");
+let NEENRGY_SIGN = "NEENERGY";
+let neEnergyFile = "data/neEnergy.json";
+
+console.log("Loading NeEnergy.json...");
+let neEnergyData = JSON.parse(fs.readFileSync(neEnergyFile));
 
 module.exports = {
     parse: (argsStr) => {
